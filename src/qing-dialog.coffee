@@ -5,7 +5,7 @@ class QingDialog extends QingModule
   @opts:
     content: null
     width: 600
-    backdrop: true
+    modal: true
     cls: null
     fullscreen: false
 
@@ -30,52 +30,51 @@ class QingDialog extends QingModule
     @el.data 'qingDialog', @
 
   _render: ->
-    @el = $ template.dialog
+    @el = $ template
     @wrapper = @el.find '.wrapper'
     @contentWrapper = @wrapper.find '.content'
 
-    @el.addClass @opts.cls if @opts.cls
-    @el.addClass 'fullscreen' if @opts.fullscreen
-    @setContent @opts.content
-    @setWidth @opts.width
-
-    $('body').addClass 'qing-dialog-open'
-    @_showBackdrop => @_showDialog()
+    @_setup()
+    @el.appendTo 'body'
+    @_show()
 
   _bind: ->
-    @el.on 'click', (e) =>
-      @remove() if $(e.target).is('.qing-dialog') && @opts.backdrop
+    @el
+      .on 'click', (e) =>
+        @remove() if $(e.target).is('.qing-dialog') && @opts.modal
+      .on 'click', '.close-button', =>
+        @remove()
 
     $(document).on "keydown.qing-dialog-#{@id}", (e) =>
       @remove() if e.which is 27
 
-  _showDialog: ->
-    @el.appendTo('body').addClass('show').scrollTop 0
-    forceReflow(@el) and @el.addClass 'open'
+  _setup: ->
+    @el.addClass @opts.cls if @opts.cls
+    @el.addClass 'modal' if @opts.modal
+    @el.addClass 'fullscreen' if @opts.fullscreen
 
-  _showBackdrop: (callback) ->
-    if @opts.backdrop
-      @backdrop = $(template.backdrop).appendTo 'body'
-      forceReflow(@backdrop) and @backdrop.addClass 'open'
-      @backdrop.one 'transitionend', callback
+    @setContent @opts.content
+    @setWidth @opts.width
+
+  _show: ->
+    $('body').addClass 'qing-dialog-open'
+    @el.show() and forceReflow(@el)
+
+    if @opts.modal
+      @el.addClass('in').one 'transitionend', =>
+        @el.addClass 'open'
     else
-      callback()
+      @el.addClass 'open'
 
   remove: ->
-    @_hideDialog => @_hideBackdrop => @_cleanup()
-
-  _hideDialog: (callback) ->
-    @el.removeClass('open') and forceReflow(@el)
-    @el.on 'transitionend', =>
-      @el.removeClass 'show'
-      callback()
-
-  _hideBackdrop: (callback) ->
-    if @opts.backdrop
-      @backdrop.removeClass 'open'
-      @backdrop.one 'transitionend', callback
-    else
-      callback()
+    @el.removeClass('open')
+    @wrapper.on 'transitionend', =>
+      if @opts.modal
+        setTimeout =>
+          @el.removeClass('in').one 'transitionend', => @_cleanup()
+        , 0
+      else
+        @_cleanup()
 
   setContent: (content) ->
     @contentWrapper.html content
@@ -86,7 +85,6 @@ class QingDialog extends QingModule
   _cleanup: ->
     @trigger 'remove'
     @el.remove().removeData 'qingDialog'
-    @backdrop?.remove()
 
     $(document).off "keydown.qing-dialog-#{@id}"
     $('body').removeClass 'qing-dialog-open'
@@ -94,6 +92,5 @@ class QingDialog extends QingModule
 forceReflow = ($el) ->
   el = if $el instanceof $ then $el[0] else $el
   el.offsetHeight
-  true
 
 module.exports = QingDialog

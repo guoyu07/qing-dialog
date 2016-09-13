@@ -6,7 +6,7 @@
  * Released under the MIT license
  * http://mycolorway.github.io/qing-dialog/license.html
  *
- * Date: 2016-09-13
+ * Date: 2016-09-14
  */
 ;(function(root, factory) {
   if (typeof module === 'object' && module.exports) {
@@ -17,16 +17,7 @@
 }(this, function ($,QingModule) {
 var define, module, exports;
 var b = require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var backdrop, dialog;
-
-backdrop = "<div class=\"qing-dialog-backdrop\"></div>";
-
-dialog = "<div class=\"qing-dialog\">\n  <div class=\"wrapper\">\n    <div class=\"content\"></div>\n  </div>\n</div>";
-
-module.exports = {
-  backdrop: backdrop,
-  dialog: dialog
-};
+module.exports = "<div class=\"qing-dialog\">\n  <div class=\"wrapper\">\n    <div class=\"content\"></div>\n    <a href=\"javascript:;\" class=\"close-button\">\n      <span>&times;</span>\n    </a>\n  </div>\n</div>";
 
 },{}],"qing-dialog":[function(require,module,exports){
 var QingDialog, forceReflow, template,
@@ -41,7 +32,7 @@ QingDialog = (function(superClass) {
   QingDialog.opts = {
     content: null,
     width: 600,
-    backdrop: true,
+    modal: true,
     cls: null,
     fullscreen: false
   };
@@ -69,31 +60,24 @@ QingDialog = (function(superClass) {
   }
 
   QingDialog.prototype._render = function() {
-    this.el = $(template.dialog);
+    this.el = $(template);
     this.wrapper = this.el.find('.wrapper');
     this.contentWrapper = this.wrapper.find('.content');
-    if (this.opts.cls) {
-      this.el.addClass(this.opts.cls);
-    }
-    if (this.opts.fullscreen) {
-      this.el.addClass('fullscreen');
-    }
-    this.setContent(this.opts.content);
-    this.setWidth(this.opts.width);
-    $('body').addClass('qing-dialog-open');
-    return this._showBackdrop((function(_this) {
-      return function() {
-        return _this._showDialog();
-      };
-    })(this));
+    this._setup();
+    this.el.appendTo('body');
+    return this._show();
   };
 
   QingDialog.prototype._bind = function() {
     this.el.on('click', (function(_this) {
       return function(e) {
-        if ($(e.target).is('.qing-dialog') && _this.opts.backdrop) {
+        if ($(e.target).is('.qing-dialog') && _this.opts.modal) {
           return _this.remove();
         }
+      };
+    })(this)).on('click', '.close-button', (function(_this) {
+      return function() {
+        return _this.remove();
       };
     })(this));
     return $(document).on("keydown.qing-dialog-" + this.id, (function(_this) {
@@ -105,48 +89,49 @@ QingDialog = (function(superClass) {
     })(this));
   };
 
-  QingDialog.prototype._showDialog = function() {
-    this.el.appendTo('body').addClass('show').scrollTop(0);
-    return forceReflow(this.el) && this.el.addClass('open');
+  QingDialog.prototype._setup = function() {
+    if (this.opts.cls) {
+      this.el.addClass(this.opts.cls);
+    }
+    if (this.opts.modal) {
+      this.el.addClass('modal');
+    }
+    if (this.opts.fullscreen) {
+      this.el.addClass('fullscreen');
+    }
+    this.setContent(this.opts.content);
+    return this.setWidth(this.opts.width);
   };
 
-  QingDialog.prototype._showBackdrop = function(callback) {
-    if (this.opts.backdrop) {
-      this.backdrop = $(template.backdrop).appendTo('body');
-      forceReflow(this.backdrop) && this.backdrop.addClass('open');
-      return this.backdrop.one('transitionend', callback);
+  QingDialog.prototype._show = function() {
+    $('body').addClass('qing-dialog-open');
+    this.el.show() && forceReflow(this.el);
+    if (this.opts.modal) {
+      return this.el.addClass('in').one('transitionend', (function(_this) {
+        return function() {
+          return _this.el.addClass('open');
+        };
+      })(this));
     } else {
-      return callback();
+      return this.el.addClass('open');
     }
   };
 
   QingDialog.prototype.remove = function() {
-    return this._hideDialog((function(_this) {
+    this.el.removeClass('open');
+    return this.wrapper.on('transitionend', (function(_this) {
       return function() {
-        return _this._hideBackdrop(function() {
+        if (_this.opts.modal) {
+          return setTimeout(function() {
+            return _this.el.removeClass('in').one('transitionend', function() {
+              return _this._cleanup();
+            });
+          }, 0);
+        } else {
           return _this._cleanup();
-        });
+        }
       };
     })(this));
-  };
-
-  QingDialog.prototype._hideDialog = function(callback) {
-    this.el.removeClass('open') && forceReflow(this.el);
-    return this.el.on('transitionend', (function(_this) {
-      return function() {
-        _this.el.removeClass('show');
-        return callback();
-      };
-    })(this));
-  };
-
-  QingDialog.prototype._hideBackdrop = function(callback) {
-    if (this.opts.backdrop) {
-      this.backdrop.removeClass('open');
-      return this.backdrop.one('transitionend', callback);
-    } else {
-      return callback();
-    }
   };
 
   QingDialog.prototype.setContent = function(content) {
@@ -160,12 +145,8 @@ QingDialog = (function(superClass) {
   };
 
   QingDialog.prototype._cleanup = function() {
-    var ref;
     this.trigger('remove');
     this.el.remove().removeData('qingDialog');
-    if ((ref = this.backdrop) != null) {
-      ref.remove();
-    }
     $(document).off("keydown.qing-dialog-" + this.id);
     return $('body').removeClass('qing-dialog-open');
   };
@@ -177,8 +158,7 @@ QingDialog = (function(superClass) {
 forceReflow = function($el) {
   var el;
   el = $el instanceof $ ? $el[0] : $el;
-  el.offsetHeight;
-  return true;
+  return el.offsetHeight;
 };
 
 module.exports = QingDialog;

@@ -11,6 +11,7 @@ QingDialog is a ui component inherited from QingModule.
 ## Usage
 
 ```html
+<link media="all" rel="stylesheet" href="node_modules/qing-dialog/dist/qing-dialog.css">
 <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
 <script type="text/javascript" src="node_modules/qing-module/dist/qing-module.js"></script>
 <script type="text/javascript" src="node_modules/qing-dialog/dist/qing-dialog.js"></script>
@@ -36,7 +37,7 @@ __width__
 
 Number, 600 by default.
 
-__backdrop__
+__modal__
 
 Boolean, true by default.
 

@@ -19,19 +19,18 @@
   left: 0;
   z-index: 1050;
   display: none;
-  overflow: hidden;
-  opacity: 0;
-  transition: opacity .15s linear; }
-  .qing-dialog.show {
-    display: flex;
-    align-items: center; }
-  .qing-dialog.open {
+  overflow: hidden; }
+  .qing-dialog.modal {
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.55);
+    transition: opacity .2s linear; }
+  .qing-dialog.modal.in {
     opacity: 1; }
-    .qing-dialog.open .wrapper {
-      transform: translate(0, 0); }
+  .qing-dialog.open .wrapper {
+    transform: translate(0, 0); }
   .qing-dialog.fullscreen .wrapper {
     position: absolute;
-    top: 40px;
+    top: 0;
     right: 40px;
     bottom: 40px;
     left: 40px;
@@ -42,21 +41,16 @@
     min-height: 1em;
     margin: 0 auto;
     border: 1px solid #dfdfdf;
-    border-radius: 2px;
+    border-radius: 0 0 2px 2px;
     background-color: #fff;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    transform: translate(0, -50%);
-    transition: transform .3s ease-out; }
-
-.qing-dialog-backdrop {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1040;
-  background-color: #000000;
-  opacity: 0;
-  transition: opacity .15s linear; }
-  .qing-dialog-backdrop.open {
-    opacity: 0.65; }
+    transform: translate(0, -100%);
+    transition: transform .2s ease-out; }
+  .qing-dialog .close-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    text-decoration: none;
+    color: #9b9b9b; }
+    .qing-dialog .close-button:hover {
+      color: #686868; }

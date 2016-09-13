@@ -1,15 +1,10 @@
-backdrop = """
-  <div class="qing-dialog-backdrop"></div>
-"""
-
-dialog = """
+module.exports = """
   <div class="qing-dialog">
     <div class="wrapper">
       <div class="content"></div>
+      <a href="javascript:;" class="close-button">
+        <span>&times;</span>
+      </a>
     </div>
   </div>
 """
-
-module.exports =
-  backdrop: backdrop
-  dialog: dialog
