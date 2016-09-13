@@ -14,37 +14,61 @@ QingDialog is a ui component inherited from QingModule.
 <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
 <script type="text/javascript" src="node_modules/qing-module/dist/qing-module.js"></script>
 <script type="text/javascript" src="node_modules/qing-dialog/dist/qing-dialog.js"></script>
-
-<div class="qing-dialog"></div>
 ```
 
 ```js
-var qingDialog = new QingDialog({
-  el: '.qing-dialog'
+var dialog = new QingDialog({
+  content: 'dialog content here'
 });
 
-qingDialog.on('ready', function(e) {
+dialog.on('remove', function(e) {
   // do something
 });
 ```
 
 ## Options
 
-__el__
+__content__
 
-Selector/Element/jQuery Object, required, specify the html element.
+Selector/Element/jQuery Object, required, specify the dialog content.
 
-## Methods
+__width__
 
-__destroy__ ()
+Number, 600 by default.
 
-Destroy component, restore element to original state.
+__backdrop__
+
+Boolean, true by default.
+
+__fullscreen__
+
+Boolean, false by default.
+
+__cls__
+
+String, extra class names for the dialog div.
+
+## Class Methods
+
+__removeAll__ ()
+
+Destroy all dialogs.
+
+## Instance Methods
+
+__setContent__ (content)
+
+Set the dialog's content.
+
+__remove__ ()
+
+Destroy the dialog.
 
 ## Events
 
-__ready__ (event)
+__remove__
 
-Triggered after initialization.
+Triggered after removed.
 
 ## Installation
 
