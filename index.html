@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>QingDialog</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link media="all" rel="stylesheet" type="text/css" href="dist/qing-dialog.css">
+
+	<script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="node_modules/qing-module/dist/qing-module.js"></script>
+	<script type="text/javascript" src="dist/qing-dialog.js"></script>
+	<script type="text/javascript">
+		$(function() {
+      $('.show-normal-dialog').on('click', function() {
+				dialog = new QingDialog({
+					content: '<div style="padding: 40px;">This is a normal dialog</div>'
+				});
+			});
+
+			$('.show-fullscreen-dialog').on('click', function() {
+				dialog = new QingDialog({
+					content: '<div style="padding: 40px;">This is a fullscreen dialog</div>',
+					fullscreen: true
+				});
+			});
+		});
+	</script>
+
+</head>
+<body>
+  <div class="buttons">
+		<button type="button" class="show-normal-dialog">show normal dialog</button>
+		<button type="button" class="show-fullscreen-dialog">show fullscreen dialog</button>
+	</div>
+</body>
+</html>

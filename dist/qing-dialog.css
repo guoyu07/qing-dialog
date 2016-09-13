@@ -1,0 +1,62 @@
+/**
+ * qing-dialog v0.0.1
+ * http://mycolorway.github.io/qing-dialog
+ *
+ * Copyright Mycolorway Design
+ * Released under the MIT license
+ * http://mycolorway.github.io/qing-dialog/license.html
+ *
+ * Date: 2016-09-13
+ */
+.qing-dialog-open {
+  overflow: hidden; }
+
+.qing-dialog {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1050;
+  display: none;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity .15s linear; }
+  .qing-dialog.show {
+    display: flex;
+    align-items: center; }
+  .qing-dialog.open {
+    opacity: 1; }
+    .qing-dialog.open .wrapper {
+      transform: translate(0, 0); }
+  .qing-dialog.fullscreen .wrapper {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    bottom: 40px;
+    left: 40px;
+    width: auto; }
+  .qing-dialog .wrapper {
+    position: relative;
+    width: 600px;
+    min-height: 1em;
+    margin: 0 auto;
+    border: 1px solid #dfdfdf;
+    border-radius: 2px;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transform: translate(0, -50%);
+    transition: transform .3s ease-out; }
+
+.qing-dialog-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+  background-color: #000000;
+  opacity: 0;
+  transition: opacity .15s linear; }
+  .qing-dialog-backdrop.open {
+    opacity: 0.65; }

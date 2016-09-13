@@ -1,0 +1,27 @@
+{
+  "name": "qing-dialog",
+  "version": "0.0.1",
+  "description": "A simple dialog component.",
+  "homepage": "http://mycolorway.github.io/qing-dialog",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mycolorway/qing-dialog.git"
+  },
+  "author": "farthinker <farthinker@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mycolorway/qing-dialog/issues"
+  },
+  "main": "dist/qing-dialog.js",
+  "scripts": {
+    "start": "gulp",
+    "test": "gulp test"
+  },
+  "dependencies": {
+    "jquery": "^3.1.0",
+    "qing-module": "~1.0.0"
+  },
+  "devDependencies": {
+    "qing-build": "^0.x"
+  }
+}
