@@ -6,7 +6,7 @@
 [![David](https://img.shields.io/david/mycolorway/qing-dialog.svg)](https://david-dm.org/mycolorway/qing-dialog)
 [![David](https://img.shields.io/david/dev/mycolorway/qing-dialog.svg)](https://david-dm.org/mycolorway/qing-dialog#info=devDependencies)
 
-QingDialog is a ui component inherited from QingModule.
+A simple dialog component.
 
 ## Usage
 
