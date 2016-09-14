@@ -17,7 +17,7 @@
 }(this, function ($,QingModule) {
 var define, module, exports;
 var b = require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-module.exports = "<div class=\"qing-dialog\">\n  <div class=\"wrapper\">\n    <div class=\"content\"></div>\n    <a href=\"javascript:;\" class=\"close-button\">\n      <span>&times;</span>\n    </a>\n  </div>\n</div>";
+module.exports = "<div class=\"qing-dialog\">\n  <div class=\"wrapper\">\n    <a href=\"javascript:;\" class=\"close-button\">\n      <span>&times;</span>\n    </a>\n  </div>\n</div>";
 
 },{}],"qing-dialog":[function(require,module,exports){
 var QingDialog, forceReflow, template,
@@ -62,7 +62,6 @@ QingDialog = (function(superClass) {
   QingDialog.prototype._render = function() {
     this.el = $(template);
     this.wrapper = this.el.find('.wrapper');
-    this.contentWrapper = this.wrapper.find('.content');
     this._setup();
     this.el.appendTo('body');
     return this._show();
@@ -135,7 +134,11 @@ QingDialog = (function(superClass) {
   };
 
   QingDialog.prototype.setContent = function(content) {
-    return this.contentWrapper.html(content);
+    var ref;
+    if ((ref = this.content) != null) {
+      ref.remove();
+    }
+    return this.content = $(content).appendTo(this.wrapper);
   };
 
   QingDialog.prototype.setWidth = function(width) {

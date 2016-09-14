@@ -6,7 +6,7 @@
  * Released under the MIT license
  * http://mycolorway.github.io/qing-dialog/license.html
  *
- * Date: 2016-09-13
+ * Date: 2016-09-14
  */
 .qing-dialog-open {
   overflow: hidden; }
@@ -23,11 +23,12 @@
   .qing-dialog.modal {
     opacity: 0;
     background-color: rgba(0, 0, 0, 0.55);
-    transition: opacity .2s linear; }
+    transition: opacity .2s; }
   .qing-dialog.modal.in {
     opacity: 1; }
   .qing-dialog.open .wrapper {
-    transform: translate(0, 0); }
+    transform: translate(0, 0);
+    opacity: 1; }
   .qing-dialog.fullscreen .wrapper {
     position: absolute;
     top: 0;
@@ -44,8 +45,9 @@
     border-radius: 0 0 2px 2px;
     background-color: #fff;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    transform: translate(0, -100%);
-    transition: transform .2s ease-out; }
+    transform: translate(0, -30%);
+    transition: transform .2s, opacity .2s;
+    opacity: 0; }
   .qing-dialog .close-button {
     position: absolute;
     top: 20px;

@@ -32,7 +32,6 @@ class QingDialog extends QingModule
   _render: ->
     @el = $ template
     @wrapper = @el.find '.wrapper'
-    @contentWrapper = @wrapper.find '.content'
 
     @_setup()
     @el.appendTo 'body'
@@ -77,7 +76,8 @@ class QingDialog extends QingModule
         @_cleanup()
 
   setContent: (content) ->
-    @contentWrapper.html content
+    @content?.remove()
+    @content = $(content).appendTo @wrapper
 
   setWidth: (width) ->
     @wrapper.css 'width', width unless @opts.fullscreen
