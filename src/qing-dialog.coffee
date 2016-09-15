@@ -47,6 +47,9 @@ class QingDialog extends QingModule
     $(document).on "keydown.qing-dialog-#{@id}", (e) =>
       @remove() if e.which is 27
 
+    $(window).on "resize.qing-dialog-#{@id}", =>
+      @_setMaxHeight()
+
   _setup: ->
     @el.addClass @opts.cls if @opts.cls
     @el.addClass 'modal' if @opts.modal
@@ -54,6 +57,7 @@ class QingDialog extends QingModule
 
     @setContent @opts.content
     @setWidth @opts.width
+    @_setMaxHeight()
 
   _show: ->
     $('body').addClass 'qing-dialog-open'
@@ -82,11 +86,16 @@ class QingDialog extends QingModule
   setWidth: (width) ->
     @wrapper.css 'width', width unless @opts.fullscreen
 
+  _setMaxHeight: ->
+    unless @opts.fullscreen
+      @wrapper.css 'maxHeight', document.documentElement.clientHeight - 40
+
   _cleanup: ->
     @trigger 'remove'
     @el.remove().removeData 'qingDialog'
 
     $(document).off "keydown.qing-dialog-#{@id}"
+    $(window).off "resize.qing-dialog-#{@id}"
     $('body').removeClass 'qing-dialog-open'
 
 forceReflow = ($el) ->

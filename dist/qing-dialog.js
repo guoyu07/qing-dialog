@@ -1,12 +1,12 @@
 /**
- * qing-dialog v0.0.1
+ * qing-dialog v1.0.0
  * http://mycolorway.github.io/qing-dialog
  *
  * Copyright Mycolorway Design
  * Released under the MIT license
  * http://mycolorway.github.io/qing-dialog/license.html
  *
- * Date: 2016-09-14
+ * Date: 2016-09-15
  */
 ;(function(root, factory) {
   if (typeof module === 'object' && module.exports) {
@@ -79,11 +79,16 @@ QingDialog = (function(superClass) {
         return _this.remove();
       };
     })(this));
-    return $(document).on("keydown.qing-dialog-" + this.id, (function(_this) {
+    $(document).on("keydown.qing-dialog-" + this.id, (function(_this) {
       return function(e) {
         if (e.which === 27) {
           return _this.remove();
         }
+      };
+    })(this));
+    return $(window).on("resize.qing-dialog-" + this.id, (function(_this) {
+      return function() {
+        return _this._setMaxHeight();
       };
     })(this));
   };
@@ -99,7 +104,8 @@ QingDialog = (function(superClass) {
       this.el.addClass('fullscreen');
     }
     this.setContent(this.opts.content);
-    return this.setWidth(this.opts.width);
+    this.setWidth(this.opts.width);
+    return this._setMaxHeight();
   };
 
   QingDialog.prototype._show = function() {
@@ -147,10 +153,17 @@ QingDialog = (function(superClass) {
     }
   };
 
+  QingDialog.prototype._setMaxHeight = function() {
+    if (!this.opts.fullscreen) {
+      return this.wrapper.css('maxHeight', document.documentElement.clientHeight - 40);
+    }
+  };
+
   QingDialog.prototype._cleanup = function() {
     this.trigger('remove');
     this.el.remove().removeData('qingDialog');
     $(document).off("keydown.qing-dialog-" + this.id);
+    $(window).off("resize.qing-dialog-" + this.id);
     return $('body').removeClass('qing-dialog-open');
   };
 
