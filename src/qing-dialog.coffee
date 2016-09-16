@@ -1,6 +1,7 @@
 template = require './template.coffee'
 
 class QingDialog extends QingModule
+  name: 'QingDialog'
 
   @opts:
     content: null

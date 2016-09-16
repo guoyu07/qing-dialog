@@ -29,6 +29,8 @@ template = require('./template.coffee');
 QingDialog = (function(superClass) {
   extend(QingDialog, superClass);
 
+  QingDialog.prototype.name = 'QingDialog';
+
   QingDialog.opts = {
     content: null,
     width: 600,
