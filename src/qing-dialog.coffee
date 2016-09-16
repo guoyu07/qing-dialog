@@ -8,6 +8,7 @@ class QingDialog extends QingModule
     modal: true
     cls: null
     fullscreen: false
+    target: 'body'
 
   @count: 0
 
@@ -34,7 +35,7 @@ class QingDialog extends QingModule
     @wrapper = @el.find '.wrapper'
 
     @_setup()
-    @el.appendTo 'body'
+    @el.appendTo @opts.target
     @_show()
 
   _bind: ->

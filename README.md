@@ -49,6 +49,10 @@ __cls__
 
 String, extra class names for the dialog div.
 
+__target__
+
+Selector/Element/jQuery Object, `body` by default.
+
 ## Class Methods
 
 __removeAll__ ()

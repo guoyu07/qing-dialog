@@ -6,7 +6,7 @@
  * Released under the MIT license
  * http://mycolorway.github.io/qing-dialog/license.html
  *
- * Date: 2016-09-15
+ * Date: 2016-09-16
  */
 ;(function(root, factory) {
   if (typeof module === 'object' && module.exports) {
@@ -34,7 +34,8 @@ QingDialog = (function(superClass) {
     width: 600,
     modal: true,
     cls: null,
-    fullscreen: false
+    fullscreen: false,
+    target: 'body'
   };
 
   QingDialog.count = 0;
@@ -63,7 +64,7 @@ QingDialog = (function(superClass) {
     this.el = $(template);
     this.wrapper = this.el.find('.wrapper');
     this._setup();
-    this.el.appendTo('body');
+    this.el.appendTo(this.opts.target);
     return this._show();
   };
 
