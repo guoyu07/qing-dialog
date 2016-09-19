@@ -49,7 +49,7 @@ __cls__
 
 String, extra class names for the dialog div.
 
-__target__
+__appendTo__
 
 Selector/Element/jQuery Object, `body` by default.
 
