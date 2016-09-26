@@ -6,7 +6,7 @@
  * Released under the MIT license
  * http://mycolorway.github.io/qing-dialog/license.html
  *
- * Date: 2016-09-19
+ * Date: 2016-09-26
  */
 ;(function(root, factory) {
   if (typeof module === 'object' && module.exports) {
@@ -55,9 +55,13 @@ QingDialog = (function(superClass) {
     if (this.opts.content === null) {
       throw new Error('QingDialog: option content is required');
     }
+    if ((this.el = $('.qing-dialog')).length) {
+      this._rerender();
+      this._unbind();
+    } else {
+      this._render();
+    }
     this.id = ++QingDialog.count;
-    QingDialog.removeAll();
-    this._render();
     this._bind();
     this.el.data('qingDialog', this);
   }
@@ -68,6 +72,14 @@ QingDialog = (function(superClass) {
     this._setup();
     this.el.appendTo(this.opts.appendTo);
     return this._show();
+  };
+
+  QingDialog.prototype._rerender = function() {
+    var previousDialog;
+    previousDialog = this.el.data('qingDialog');
+    this.wrapper = previousDialog.wrapper;
+    this.content = previousDialog.content;
+    return this._setup();
   };
 
   QingDialog.prototype._bind = function() {
@@ -127,7 +139,7 @@ QingDialog = (function(superClass) {
 
   QingDialog.prototype.remove = function() {
     this.el.removeClass('open');
-    return this.wrapper.on('transitionend', (function(_this) {
+    return this.wrapper.one('transitionend', (function(_this) {
       return function() {
         if (_this.opts.modal) {
           return setTimeout(function() {
@@ -162,11 +174,16 @@ QingDialog = (function(superClass) {
     }
   };
 
+  QingDialog.prototype._unbind = function() {
+    this.el.off();
+    $(document).off("keydown.qing-dialog-" + this.id);
+    return $(window).off("resize.qing-dialog-" + this.id);
+  };
+
   QingDialog.prototype._cleanup = function() {
     this.trigger('remove');
     this.el.remove().removeData('qingDialog');
-    $(document).off("keydown.qing-dialog-" + this.id);
-    $(window).off("resize.qing-dialog-" + this.id);
+    this._unbind();
     return $('body').removeClass('qing-dialog-open');
   };
 

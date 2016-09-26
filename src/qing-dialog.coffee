@@ -24,10 +24,13 @@ class QingDialog extends QingModule
     if @opts.content is null
       throw new Error 'QingDialog: option content is required'
 
-    @id = ++QingDialog.count
-    QingDialog.removeAll()
+    if (@el = $ '.qing-dialog').length
+      @_rerender()
+      @_unbind()
+    else
+      @_render()
 
-    @_render()
+    @id = ++QingDialog.count
     @_bind()
     @el.data 'qingDialog', @
 
@@ -38,6 +41,12 @@ class QingDialog extends QingModule
     @_setup()
     @el.appendTo @opts.appendTo
     @_show()
+
+  _rerender: ->
+    previousDialog = @el.data 'qingDialog'
+    @wrapper = previousDialog.wrapper
+    @content = previousDialog.content
+    @_setup()
 
   _bind: ->
     @el
@@ -73,7 +82,7 @@ class QingDialog extends QingModule
 
   remove: ->
     @el.removeClass('open')
-    @wrapper.on 'transitionend', =>
+    @wrapper.one 'transitionend', =>
       if @opts.modal
         setTimeout =>
           @el.removeClass('in').one 'transitionend', => @_cleanup()
@@ -92,12 +101,15 @@ class QingDialog extends QingModule
     unless @opts.fullscreen
       @wrapper.css 'maxHeight', document.documentElement.clientHeight - 40
 
+  _unbind: ->
+    @el.off()
+    $(document).off "keydown.qing-dialog-#{@id}"
+    $(window).off "resize.qing-dialog-#{@id}"
+
   _cleanup: ->
     @trigger 'remove'
     @el.remove().removeData 'qingDialog'
-
-    $(document).off "keydown.qing-dialog-#{@id}"
-    $(window).off "resize.qing-dialog-#{@id}"
+    @_unbind()
     $('body').removeClass 'qing-dialog-open'
 
 forceReflow = ($el) ->
