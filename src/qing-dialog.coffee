@@ -15,7 +15,7 @@ class QingDialog extends QingModule
 
   @removeAll: ->
     $('.qing-dialog').each (_, el) ->
-      $(el).data('qingDialog')?._cleanup()
+      $(el).data('qingDialog')?.destroy()
 
   constructor: (opts) ->
     super
@@ -73,22 +73,11 @@ class QingDialog extends QingModule
   _show: ->
     $('body').addClass 'qing-dialog-open'
     @el.show() and forceReflow(@el)
-
-    if @opts.modal
-      @el.addClass('in').one 'transitionend', =>
-        @el.addClass 'open'
-    else
-      @el.addClass 'open'
+    @el.addClass 'in open'
 
   remove: ->
-    @el.removeClass('open')
-    @wrapper.one 'transitionend', =>
-      if @opts.modal
-        setTimeout =>
-          @el.removeClass('in').one 'transitionend', => @_cleanup()
-        , 0
-      else
-        @_cleanup()
+    @el.removeClass('open in')
+    @wrapper.one 'transitionend', => @destroy()
 
   setContent: (content) ->
     @content?.remove()
@@ -106,7 +95,7 @@ class QingDialog extends QingModule
     $(document).off "keydown.qing-dialog-#{@id}"
     $(window).off "resize.qing-dialog-#{@id}"
 
-  _cleanup: ->
+  destroy: ->
     @trigger 'remove'
     @el.remove().removeData 'qingDialog'
     @_unbind()

@@ -6,7 +6,7 @@
  * Released under the MIT license
  * http://mycolorway.github.io/qing-dialog/license.html
  *
- * Date: 2016-09-26
+ * Date: 2016-09-27
  */
 ;(function(root, factory) {
   if (typeof module === 'object' && module.exports) {
@@ -45,7 +45,7 @@ QingDialog = (function(superClass) {
   QingDialog.removeAll = function() {
     return $('.qing-dialog').each(function(_, el) {
       var ref;
-      return (ref = $(el).data('qingDialog')) != null ? ref._cleanup() : void 0;
+      return (ref = $(el).data('qingDialog')) != null ? ref.destroy() : void 0;
     });
   };
 
@@ -126,30 +126,14 @@ QingDialog = (function(superClass) {
   QingDialog.prototype._show = function() {
     $('body').addClass('qing-dialog-open');
     this.el.show() && forceReflow(this.el);
-    if (this.opts.modal) {
-      return this.el.addClass('in').one('transitionend', (function(_this) {
-        return function() {
-          return _this.el.addClass('open');
-        };
-      })(this));
-    } else {
-      return this.el.addClass('open');
-    }
+    return this.el.addClass('in open');
   };
 
   QingDialog.prototype.remove = function() {
-    this.el.removeClass('open');
+    this.el.removeClass('open in');
     return this.wrapper.one('transitionend', (function(_this) {
       return function() {
-        if (_this.opts.modal) {
-          return setTimeout(function() {
-            return _this.el.removeClass('in').one('transitionend', function() {
-              return _this._cleanup();
-            });
-          }, 0);
-        } else {
-          return _this._cleanup();
-        }
+        return _this.destroy();
       };
     })(this));
   };
@@ -180,7 +164,7 @@ QingDialog = (function(superClass) {
     return $(window).off("resize.qing-dialog-" + this.id);
   };
 
-  QingDialog.prototype._cleanup = function() {
+  QingDialog.prototype.destroy = function() {
     this.trigger('remove');
     this.el.remove().removeData('qingDialog');
     this._unbind();
