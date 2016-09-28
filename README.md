@@ -67,7 +67,11 @@ Set the dialog's content.
 
 __remove__ ()
 
-Destroy the dialog.
+Remove the dialog with transition.
+
+__destroy__ ()
+
+Remove the dialog without transition.
 
 ## Events
 

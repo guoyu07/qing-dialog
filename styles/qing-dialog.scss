@@ -18,7 +18,7 @@
     transition: opacity .2s;
   }
 
-  &.modal.in {
+  &.modal.open {
     opacity: 1;
   }
 

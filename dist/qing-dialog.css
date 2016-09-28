@@ -6,7 +6,7 @@
  * Released under the MIT license
  * http://mycolorway.github.io/qing-dialog/license.html
  *
- * Date: 2016-09-27
+ * Date: 2016-09-28
  */
 .qing-dialog-open {
   overflow: hidden; }
@@ -24,7 +24,7 @@
     opacity: 0;
     background-color: rgba(0, 0, 0, 0.55);
     transition: opacity .2s; }
-  .qing-dialog.modal.in {
+  .qing-dialog.modal.open {
     opacity: 1; }
   .qing-dialog.open .wrapper {
     transform: translate(0, 0);

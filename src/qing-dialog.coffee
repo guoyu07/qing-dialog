@@ -73,10 +73,10 @@ class QingDialog extends QingModule
   _show: ->
     $('body').addClass 'qing-dialog-open'
     @el.show() and forceReflow(@el)
-    @el.addClass 'in open'
+    @el.addClass 'open'
 
   remove: ->
-    @el.removeClass('open in')
+    @el.removeClass('open')
     @wrapper.one 'transitionend', => @destroy()
 
   setContent: (content) ->
