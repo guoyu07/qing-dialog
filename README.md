@@ -75,9 +75,13 @@ Remove the dialog without transition.
 
 ## Events
 
-__remove__
+__destroy__
 
-Triggered after removed.
+Triggered after destroy dialog.
+
+__before-destroy__
+
+Triggered before destroy dialog.
 
 ## Installation
 
