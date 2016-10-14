@@ -6,7 +6,7 @@
  * Released under the MIT license
  * http://mycolorway.github.io/qing-dialog/license.html
  *
- * Date: 2016-09-28
+ * Date: 2016-10-15
  */
 .qing-dialog-open {
   overflow: hidden; }
@@ -23,20 +23,20 @@
   .qing-dialog.modal {
     opacity: 0;
     background-color: rgba(0, 0, 0, 0.55);
-    transition: opacity .2s; }
+    transition: opacity .2s ease-in-out; }
   .qing-dialog.modal.open {
     opacity: 1; }
-  .qing-dialog.open .wrapper {
+  .qing-dialog.open .qing-dialog-wrapper {
     transform: translate(0, 0);
     opacity: 1; }
-  .qing-dialog.fullscreen .wrapper {
+  .qing-dialog.fullscreen .qing-dialog-wrapper {
     position: absolute;
     top: 0;
     right: 40px;
     bottom: 40px;
     left: 40px;
     width: auto; }
-  .qing-dialog .wrapper {
+  .qing-dialog .qing-dialog-wrapper {
     position: relative;
     width: 600px;
     min-height: 1em;
@@ -46,12 +46,14 @@
     background-color: #fff;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     transform: translate(0, -30%);
-    transition: transform .3s, opacity .3s, width .2s;
+    transition: transform .3s ease-in-out, opacity .3s ease-in-out, width .2s ease-in-out;
     opacity: 0; }
+    .qing-dialog .qing-dialog-wrapper .qing-dialog-content {
+      padding: 30px; }
   .qing-dialog .close-button {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 10px;
+    right: 10px;
     text-decoration: none;
     color: #9b9b9b; }
     .qing-dialog .close-button:hover {

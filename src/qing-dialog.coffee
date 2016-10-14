@@ -17,10 +17,11 @@ class QingDialog extends QingModule
     $('.qing-dialog').each (_, el) ->
       $(el).data('qingDialog')?.destroy()
 
-  constructor: (opts) ->
+  _setOptions: (opts) ->
     super
     $.extend @opts, QingDialog.opts, opts
 
+  _init: ->
     if @opts.content is null
       throw new Error 'QingDialog: option content is required'
 
@@ -36,7 +37,8 @@ class QingDialog extends QingModule
 
   _render: ->
     @el = $ template
-    @wrapper = @el.find '.wrapper'
+    @wrapper = @el.find '.qing-dialog-wrapper'
+    @content = @el.find '.qing-dialog-content'
 
     @_setup()
     @el.appendTo @opts.appendTo
@@ -80,8 +82,8 @@ class QingDialog extends QingModule
     @wrapper.one 'transitionend', => @destroy()
 
   setContent: (content) ->
-    @content?.remove()
-    @content = $(content).appendTo @wrapper
+    @content.empty()
+    @content.append $(content)
 
   setWidth: (width) ->
     @wrapper.css 'width', width unless @opts.fullscreen

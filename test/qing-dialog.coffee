@@ -15,7 +15,7 @@ describe 'QingDialog', ->
 
   beforeEach ->
     qingDialog = new QingDialog
-      el: '.test-el'
+      content: '.test-el'
 
   afterEach ->
     qingDialog.destroy()
