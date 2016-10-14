@@ -170,10 +170,10 @@ QingDialog = (function(superClass) {
   };
 
   QingDialog.prototype.destroy = function() {
-    this.trigger('remove');
     this.el.remove().removeData('qingDialog');
     this._unbind();
-    return $('body').removeClass('qing-dialog-open');
+    $('body').removeClass('qing-dialog-open');
+    return this.trigger('remove');
   };
 
   return QingDialog;

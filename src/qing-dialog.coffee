@@ -98,10 +98,10 @@ class QingDialog extends QingModule
     $(window).off "resize.qing-dialog-#{@id}"
 
   destroy: ->
-    @trigger 'remove'
     @el.remove().removeData 'qingDialog'
     @_unbind()
     $('body').removeClass 'qing-dialog-open'
+    @trigger 'remove'
 
 forceReflow = ($el) ->
   el = if $el instanceof $ then $el[0] else $el
