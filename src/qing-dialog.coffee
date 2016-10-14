@@ -10,6 +10,7 @@ class QingDialog extends QingModule
     cls: null
     fullscreen: false
     appendTo: 'body'
+    renderer: null
 
   @count: 0
 
@@ -34,6 +35,9 @@ class QingDialog extends QingModule
     @id = ++QingDialog.count
     @_bind()
     @el.data 'qingDialog', @
+
+    if $.isFunction @opts.renderer
+      @opts.renderer.call @, @wrapper, @
 
   _render: ->
     @el = $ template

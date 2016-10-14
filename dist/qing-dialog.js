@@ -41,7 +41,8 @@ QingDialog = (function(superClass) {
     modal: true,
     cls: null,
     fullscreen: false,
-    appendTo: 'body'
+    appendTo: 'body',
+    renderer: null
   };
 
   QingDialog.count = 0;
@@ -70,7 +71,10 @@ QingDialog = (function(superClass) {
     }
     this.id = ++QingDialog.count;
     this._bind();
-    return this.el.data('qingDialog', this);
+    this.el.data('qingDialog', this);
+    if ($.isFunction(this.opts.renderer)) {
+      return this.opts.renderer.call(this, this.wrapper, this);
+    }
   };
 
   QingDialog.prototype._render = function() {
