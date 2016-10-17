@@ -81,9 +81,9 @@ class QingDialog extends QingModule
     @el.show() and forceReflow(@el)
     @el.addClass 'open'
 
-  remove: ->
+  remove: (callback) ->
     @el.removeClass('open')
-    @wrapper.one 'transitionend', => @destroy()
+    @wrapper.one 'transitionend', => @destroy(callback)
 
   setContent: (content) ->
     @content.empty()
@@ -101,11 +101,12 @@ class QingDialog extends QingModule
     $(document).off "keydown.qing-dialog-#{@id}"
     $(window).off "resize.qing-dialog-#{@id}"
 
-  destroy: ->
+  destroy: (callback) ->
     @trigger 'before-destroy'
     @el.remove().removeData 'qingDialog'
     @_unbind()
     $('body').removeClass 'qing-dialog-open'
+    callback?()
     @trigger 'destroy'
 
 forceReflow = ($el) ->

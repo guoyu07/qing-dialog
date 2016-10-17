@@ -6,7 +6,7 @@
  * Released under the MIT license
  * http://mycolorway.github.io/qing-dialog/license.html
  *
- * Date: 2016-10-15
+ * Date: 2016-10-17
  */
 ;(function(root, factory) {
   if (typeof module === 'object' && module.exports) {
@@ -141,11 +141,11 @@ QingDialog = (function(superClass) {
     return this.el.addClass('open');
   };
 
-  QingDialog.prototype.remove = function() {
+  QingDialog.prototype.remove = function(callback) {
     this.el.removeClass('open');
     return this.wrapper.one('transitionend', (function(_this) {
       return function() {
-        return _this.destroy();
+        return _this.destroy(callback);
       };
     })(this));
   };
@@ -173,11 +173,14 @@ QingDialog = (function(superClass) {
     return $(window).off("resize.qing-dialog-" + this.id);
   };
 
-  QingDialog.prototype.destroy = function() {
+  QingDialog.prototype.destroy = function(callback) {
     this.trigger('before-destroy');
     this.el.remove().removeData('qingDialog');
     this._unbind();
     $('body').removeClass('qing-dialog-open');
+    if (typeof callback === "function") {
+      callback();
+    }
     return this.trigger('destroy');
   };
 
