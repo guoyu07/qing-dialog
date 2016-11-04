@@ -88,10 +88,10 @@ QingDialog = (function(superClass) {
 
   QingDialog.prototype._rerender = function() {
     var previousDialog;
-    this.el.removeClass();
     previousDialog = this.el.data('qingDialog');
     this.wrapper = previousDialog.wrapper;
     this.content = previousDialog.content;
+    this.el.removeClass(previousDialog.opts.cls + " modal fullscreen");
     return this._setup();
   };
 

@@ -49,10 +49,10 @@ class QingDialog extends QingModule
     @_show()
 
   _rerender: ->
-    @el.removeClass()
     previousDialog = @el.data 'qingDialog'
     @wrapper = previousDialog.wrapper
     @content = previousDialog.content
+    @el.removeClass "#{previousDialog.opts.cls} modal fullscreen"
     @_setup()
 
   _bind: ->
