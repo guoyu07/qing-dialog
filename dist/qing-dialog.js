@@ -6,7 +6,7 @@
  * Released under the MIT license
  * http://mycolorway.github.io/qing-dialog/license.html
  *
- * Date: 2016-10-17
+ * Date: 2016-11-4
  */
 ;(function(root, factory) {
   if (typeof module === 'object' && module.exports) {
@@ -88,6 +88,7 @@ QingDialog = (function(superClass) {
 
   QingDialog.prototype._rerender = function() {
     var previousDialog;
+    this.el.removeClass();
     previousDialog = this.el.data('qingDialog');
     this.wrapper = previousDialog.wrapper;
     this.content = previousDialog.content;
