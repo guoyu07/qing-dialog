@@ -1,5 +1,6 @@
 .qing-dialog-open {
-  overflow: hidden;
+  // overflow hidden will lose page scroll position
+  // overflow: hidden;
 }
 
 .qing-dialog {
