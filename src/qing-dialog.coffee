@@ -61,8 +61,6 @@ class QingDialog extends QingModule
         @remove() if $(e.target).is('.qing-dialog') && @opts.modal
       .on 'click', '.close-button', =>
         @remove()
-      .on 'wheel', (e) =>
-        e.stopPropagation()
 
     $(document).on "keydown.qing-dialog-#{@id}", (e) =>
       @remove() if e.which is 27

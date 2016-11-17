@@ -106,10 +106,6 @@ QingDialog = (function(superClass) {
       return function() {
         return _this.remove();
       };
-    })(this)).on('wheel', (function(_this) {
-      return function(e) {
-        return e.stopPropagation();
-      };
     })(this));
     $(document).on("keydown.qing-dialog-" + this.id, (function(_this) {
       return function(e) {
